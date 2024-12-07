@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncify</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Syncify!</h1>
+        <button id="show-artist" class="btn">Show Top Artist</button>
+        <button id="show-song" class="btn">Show Top Song</button>
+        <button id="compare-data" class="btn">Compare with Fake User</button>
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        document.getElementById("show-artist").addEventListener("click", function () {
+            fetch('/api/top')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("output").innerText = "Error: " + data.error;
+                    } else {
+                        document.getElementById("output").innerText = "Top Artists: " + data.user_top_artists.join(", ");
+                    }
+                });
+        });
+
+        document.getElementById("show-song").addEventListener("click", function () {
+            fetch('/api/top')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("output").innerText = "Error: " + data.error;
+                    } else {
+                        document.getElementById("output").innerText = "Top Tracks: " + data.user_top_tracks.join(", ");
+                    }
+                });
+        });
+
+        document.getElementById("compare-data").addEventListener("click", function () {
+            fetch('/api/compare')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("output").innerText = "Error: " + data.error;
+                    } else {
+                        const artistSim = data.artist_similarity;
+                        const trackSim = data.track_similarity;
+                        document.getElementById("output").innerHTML = `
+                            <p>Artist Similarity: ${artistSim}%</p>
+                            <p>Track Similarity: ${trackSim}%</p>
+                            <p>Fake User Top Artists: ${data.fake_user_data.top_artists.join(", ")}</p>
+                            <p>Fake User Top Tracks: ${data.fake_user_data.top_tracks.join(", ")}</p>
+                        `;
+                    }
+                });
+        });
+    </script>
+</body>
+</html>
