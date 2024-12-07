@@ -13,7 +13,7 @@ client_id = '58f5ca025c614e71a48e25e0a92e4d5d'
 client_secret = 'edb413650dbe485f87a0a1948894ca0f'
 
 #link to redirect user to
-redirect_uri = 'http://localhost:3000'
+redirect_uri = 'https://syncify-s6ky.onrender.com/callback'
 
 #intializing spotify's OAuth (for login)
 auth_manager = SpotifyOAuth(
