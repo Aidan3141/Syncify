@@ -1,21 +1,18 @@
-# Aidan Bulovic
-# Syncify
-# CS110
+import os
+from dotenv import load_dotenv
 
 from flask import Flask, render_template, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+load_dotenv()
 app = Flask(__name__)
 
-#my spotify project's id and secret
-client_id = '58f5ca025c614e71a48e25e0a92e4d5d'
-client_secret = 'edb413650dbe485f87a0a1948894ca0f'
+client_id = os.getenv("CLIENT_ID")
+client_secret = os.getenv("CLIENT_SECRET")
+redirect_uri = os.getenv("REDIRECT_URI")
 
-#link to redirect user to
-redirect_uri = 'https://syncify-s6ky.onrender.com/callback'
-
-#intializing spotify's OAuth (for login)
+# Initializing spotify's OAuth (for login)
 auth_manager = SpotifyOAuth(
     client_id=client_id,
     client_secret=client_secret,
